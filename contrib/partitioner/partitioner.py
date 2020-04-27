@@ -80,7 +80,6 @@ def main():
         print('Size: ' + str(first_part))
         prune_setting = int(first_part / 2)
         partitions = usb_partitions()
-        first_partition_uuid = get_uuid('sda1')
         if first_part < 512000:
             print("Pruning the config")
             os.system('/bin/sed -i "s/prune=550/prune=' + str(prune_setting) + '/g;" bitcoin/bitcoin.conf')
@@ -92,6 +91,7 @@ def main():
         os.system('mkdir -p /home/lncm/tempmount1')
         print('Initializing filesystem')
         os.system('/sbin/mkfs.ext4 -F /dev/sda1')
+        first_partition_uuid = get_uuid('sda1')
         os.system('/bin/mount -t ext4 /dev/sda1 /home/lncm/tempmount1')
         print('Setup bitcoin conf')
         os.system('/bin/cp /home/lncm/bitcoin/bitcoin.conf /home/lncm/tempmount1')
