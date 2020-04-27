@@ -80,8 +80,7 @@ def main():
         print('Size: ' + str(first_part))
         prune_setting = int(first_part / 2)
         partitions = usb_partitions()
-        print(get_uuid('sda1'))
-        print(usb_partition_table())
+        first_partition_uuid = get_uuid('sda1')
         if first_part < 512000:
             print("Pruning the config")
             os.system('/bin/sed -i "s/prune=550/prune=' + str(prune_setting) + '/g;" bitcoin/bitcoin.conf')
@@ -104,6 +103,8 @@ def main():
         os.system('/bin/rm -fr /home/lncm/bitcoin/bitcoin.conf')
         print('Remount new directory')
         os.system('mount -t ext4 /dev/sda1 /home/lncm/bitcoin')
+        print('Update /etc/fstab')
+        os.system('echo "UUID=' + first_partition_uuid + ' /home/lncm/bitcoin ext4 defaults,noatime 0 0"')
     else:
         print('No drives or unexpected number of drives detected!')
 if __name__ == '__main__':
