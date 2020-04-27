@@ -75,7 +75,7 @@ def usb_partition_table():
 
 def main():
     print('USB Configuration')
-    if len(usb_devs()) > 0:
+    if len(usb_devs()) == 1:
         first_part = dev_size('sda') / (1000*1000)
         print('Size: ' + str(first_part))
         prune_setting = int(first_part / 2)
@@ -105,7 +105,7 @@ def main():
         print('Remount new directory')
         os.system('mount -t ext4 /dev/sda1 /home/lncm/bitcoin')
     else:
-        print('No drives detected!')
+        print('No drives or unexpected number of drives detected!')
 if __name__ == '__main__':
     main()
 
