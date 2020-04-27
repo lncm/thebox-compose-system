@@ -103,7 +103,7 @@ def main():
         print('Remount new directory')
         os.system('mount -t ext4 /dev/sda1 /home/lncm/bitcoin')
         print('Update /etc/fstab')
-        os.system('echo "UUID=' + first_partition_uuid + ' /home/lncm/bitcoin ext4 defaults,noatime 0 0" > /etc/fstab')
+        os.system('echo "UUID=' + first_partition_uuid + ' /home/lncm/bitcoin ext4 defaults,noatime 0 0" >> /etc/fstab')
         os.system('/bin/rm -fr /home/lncm/tempmount1')
     else:
         print('No drives or unexpected number of drives detected!')
