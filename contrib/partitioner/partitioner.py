@@ -111,10 +111,12 @@ def main():
         os.system('/bin/rm -fr /home/lncm/secrets')
         os.system('/bin/rm -fr /home/lncm/bitcoin')
         os.system('/bin/rm -fr /home/lncm/lnd')
+        os.system('/bin/rm -fr /home/lncm/nginx')
         print('Set up symlinks')
         os.system('/bin/ln -s /mnt/data/secrets /home/lncm/secrets')
         os.system('/bin/ln -s /mnt/data/bitcoin /home/lncm/bitcoin')
         os.system('/bin/ln -s /mnt/data/lnd /home/lncm/lnd')
+        os.system('/bin/ln -s /mnt/data/lnd /home/lncm/nginx')
     else:
         print('No drives or unexpected number of drives detected!')
 if __name__ == '__main__':
