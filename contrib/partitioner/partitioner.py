@@ -101,9 +101,13 @@ def main():
                 os.system('/bin/mount -t ext4 /dev/' + usb_partitions()[0] + ' /mnt/data')
                 # if .rekt exists or bitcoin directory doesnt exist
                 if os.path.exists('/mnt/data/.rekt') or not os.path.exists('/mnt/data/bitcoin'):
-                    print('REKT file exists so lets format it')
+                    print('REKT file exists OR bitcoin folder not found... So lets format it')
+                    # unmount before format
+                    os.system('/bin/umount /mnt/data')
                     print('Initializing filesystem')
                     os.system('/sbin/mkfs.ext4 -F /dev/' + usb_partitions()[0])
+                    # remount
+                    os.system('/bin/mount -t ext4 /dev/' + usb_partitions()[0] + ' /mnt/data')
                     '''
                     Get Size of SDA and partition info
                     '''
