@@ -99,44 +99,52 @@ def main():
         if len(usb_partitions()) == 1:
             try:
                 os.system('/bin/mount -t ext4 /dev/' + usb_partitions()[0] + ' /mnt/data')
-                if os.path.exists('/mnt/data/.rekt'):
+                # if .rekt exists or bitcoin directory doesnt exist
+                if os.path.exists('/mnt/data/.rekt') or not os.path.exists('/mnt/data/bitcoin'):
                     print('REKT file exists so lets format it')
                     print('Initializing filesystem')
                     os.system('/sbin/mkfs.ext4 -F /dev/' + usb_partitions()[0])
+                    '''
+                    Get Size of SDA and partition info
+                    '''
+                    first_part = dev_size('sda') / (1000*1000)
+                    prune_setting = int(first_part / 2)
+
+                    if first_part < 512000:
+                        print("Pruning the config")
+                        os.system('/bin/sed -i "s/prune=550/prune=' + str(prune_setting) + '/g;" bitcoin/bitcoin.conf')
+                    else:
+                        print("Switching off pruning")
+                        os.system('/bin/sed -i "s/prune=550/#prune=550/g;" bitcoin/bitcoin.conf')
+                        os.system('/bin/sed -i "s/#txindex=1/txindex=1/g;" bitcoin/bitcoin.conf')
+
+                    '''
+                    Setup secrets, bitcoin, nginx, and lnd directory.. as a new install
+                    '''
+                    print('Setup secrets, bitcoin, nginx, and lnd directory.. as a new install')
+                    os.system('/bin/cp -fr ' + homedirpath + '/secrets /mnt/data')
+                    os.system('/bin/cp -fr ' + homedirpath + '/bitcoin /mnt/data')
+                    os.system('/bin/cp -fr ' + homedirpath + '/lnd /mnt/data')
+                    os.system('/bin/cp -fr ' + homedirpath + '/nginx /mnt/data')
                 else:
+                    '''
+                    No need to do anything
+                    '''
                     print('REKT file does not exist so we will preserve it')
 
                 print('Unmounting partition')
                 os.system('/bin/umount /mnt/data')
             except:
                 print("Error mounting the directory")
-        
-        '''
-        Get Size of SDA and partition info
-        '''
-        first_part = dev_size('sda') / (1000*1000)
-        prune_setting = int(first_part / 2)
-
-        if first_part < 512000:
-            print("Pruning the config")
-            os.system('/bin/sed -i "s/prune=550/prune=' + str(prune_setting) + '/g;" bitcoin/bitcoin.conf')
-        else:
-            print("Switching off pruning")
-            os.system('/bin/sed -i "s/prune=550/#prune=550/g;" bitcoin/bitcoin.conf')
-            os.system('/bin/sed -i "s/#txindex=1/txindex=1/g;" bitcoin/bitcoin.conf')
 
 
+        # If volume not mounted
+        if not os.path.exists(' /mnt/data/lost+found'):
+            os.system('/bin/mount -t ext4 /dev/sda1 /mnt/data')
 
         # Get UUID of the partition we just created
         partitions = usb_partitions()
         first_partition_uuid = get_uuid(partitions[0])
-        os.system('/bin/mount -t ext4 /dev/sda1 /mnt/data')
-
-        print('Setup secrets, bitcoin, nginx, and lnd directory')
-        os.system('/bin/cp -fr ' + homedirpath + '/secrets /mnt/data')
-        os.system('/bin/cp -fr ' + homedirpath + '/bitcoin /mnt/data')
-        os.system('/bin/cp -fr ' + homedirpath + '/lnd /mnt/data')
-        os.system('/bin/cp -fr ' + homedirpath + '/nginx /mnt/data')
 
         print('Setup filesystem permissions (UID=1000 GID=1000)')
         os.system('/bin/chown -R 1000.1000 /mnt/data')
