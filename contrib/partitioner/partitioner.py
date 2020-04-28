@@ -94,23 +94,23 @@ def main():
     else:
         print('Data mount exists')
 
-    if len(usb_partitions()) == 1:
-        try:
-            os.system('/bin/mount -t ext4 /dev/' + usb_partitions()[0] + ' /mnt/data')
-            if os.path.exists('/mnt/data/.rekt'):
-                print('REKT file exists so lets format it')
-                print('Initializing filesystem')
-                os.system('/sbin/mkfs.ext4 -F /dev/' + usb_partitions()[0])                
-            else:
-                print('REKT file does not exist so we will preserve it')
-
-            print('Unmounting partition')
-            os.system('/bin/umount /mnt/data')
-        except:
-            print("Error mounting the directory")
-
 
     if len(usb_devs()) == 1:
+        if len(usb_partitions()) == 1:
+            try:
+                os.system('/bin/mount -t ext4 /dev/' + usb_partitions()[0] + ' /mnt/data')
+                if os.path.exists('/mnt/data/.rekt'):
+                    print('REKT file exists so lets format it')
+                    print('Initializing filesystem')
+                    os.system('/sbin/mkfs.ext4 -F /dev/' + usb_partitions()[0])
+                else:
+                    print('REKT file does not exist so we will preserve it')
+
+                print('Unmounting partition')
+                os.system('/bin/umount /mnt/data')
+            except:
+                print("Error mounting the directory")
+        
         '''
         Get Size of SDA and partition info
         '''
