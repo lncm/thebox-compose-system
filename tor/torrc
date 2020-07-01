@@ -1,7 +1,6 @@
 SocksPort   29050
 ControlPort 29051
 
-# Cookie Authentication
-CookieAuthentication 1
-
+# Default Password
+HashedControlPassword 16:C171CBB3DECE55156066E90509F28E3E5FDFACFB6211701926A200E70D
 
