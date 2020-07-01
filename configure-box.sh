@@ -62,15 +62,17 @@ fi
 
 # Generate a TOR password
 echo "Adding tor password"
+echo "Generating TOR PASSWORD"
+TOR_PASSWORD=`dd if=/dev/urandom bs=32 count=1 2>/dev/null | sha256sum -b | sed 's/ .*//'`
 echo "Building tor container"
 docker build -t lncm/tor $PWD/build/tor
 echo "Generating password"
-SAVE_PASSWORD=`docker run --rm -it lncm/tor --quiet --hash-password "${RPCPASS}"`
+SAVE_PASSWORD=`docker run --rm -it lncm/tor --quiet --hash-password "${TOR_PASSWORD}"`
 echo "HashedControlPassword ${SAVE_PASSWORD}" >> tor/torrc
 echo "Configuring bitcoind"
-sed -i "s/torpassword=lncmrocks/torpassword=${RPCPASS}/g;" bitcoin/bitcoin.conf
+sed -i "s/torpassword=lncmrocks/torpassword=${TOR_PASSWORD}/g;" bitcoin/bitcoin.conf
 echo "Configuring LND"
-sed -i "s/tor.password=lncmrocks/tor.password=${RPCPASS}/g; " lnd/lnd.conf
+sed -i "s/tor.password=lncmrocks/tor.password=${TOR_PASSWORD}/g; " lnd/lnd.conf
 
 rm configure-box.sh
 echo "Box Configuration complete"
