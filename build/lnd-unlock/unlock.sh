@@ -1,6 +1,6 @@
 #!/bin/sh
 
-HOST=localhost:8080
+HOST=lnd:8080
 TLS_CERT=/lnd/tls.cert
 LNDPASSWORD_PATH=/secrets/lnd-password.txt
 MACAROON_PATH=/lnd/data/chain/bitcoin/mainnet/admin.macaroon
@@ -19,7 +19,7 @@ lncurl() {
 
 while true; do
 	# First make sure that port is open
-	while ! nc -z localhost 8080; do
+	while ! nc -z lnd 8080; do
 		>&2 echo "Waiting for ${HOST} port to open…"
 		sleep 3
 	done
