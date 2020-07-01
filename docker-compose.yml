@@ -80,5 +80,5 @@ services:
 
 networks:
     outside:
-        external:
-            name: Public Visible Network
+        name: Public Visible Network
+        external: true
