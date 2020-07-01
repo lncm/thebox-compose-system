@@ -62,8 +62,10 @@ fi
 
 # Generate a TOR password
 echo "Adding tor password"
-# TODO: Use docker built tor so we eliminate dependencies
-SAVE_PASSWORD=`tor --hash-password "${RPCPASS}"`
+echo "Building tor container"
+docker build -t lncm/tor $PWD/build/tor
+echo "Generating password"
+SAVE_PASSWORD=`docker run --rm -it lncm/tor --quiet --hash-password "${RPCPASS}"`
 echo "HashedControlPassword ${SAVE_PASSWORD}" >> tor/torrc
 echo "Configuring bitcoind"
 sed -i "s/torpassword=lncmrocks/torpassword=${RPCPASS}/g;" bitcoin/bitcoin.conf
