@@ -29,26 +29,27 @@ services:
                 network_mode: host
                 stop_grace_period: 15m30s
         lnd:
-                image: lncm/lnd:v0.9.2-root-experimental
+                image: lncm/lnd:v0.10.1-experimental
                 logging: *default-logging
                 volumes:
                         - ${PWD}/lnd:/data/.lnd
                         - ${PWD}/lnd:/root/.lnd
-                        - /var/lib/tor:/var/lib/tor
-                        - /run/tor:/run/tor/
+                        - ${PWD}/bitcoin:/root/.bitcoin
                 restart: on-failure
                 depends_on: [ bitcoin, web ]
                 network_mode: host
                 stop_grace_period: 5m30s
         invoicer:
-                image: "lncm/invoicer:v0.6.6"
+                image: "lncm/invoicer:v0.8.1"
                 depends_on: [ bitcoin, lnd ]
                 restart: on-failure
                 network_mode: host
                 stop_grace_period: 30s
                 volumes:
                         - "${PWD}/invoicer:/root/.lncm"
+                        - "${PWD}/invoicer:/data/.lncm"
                         - "${PWD}/invoicer:/lncm"
+                        - "${PWD}/invoicer:/data"
                         - "${PWD}/lnd:/lnd"
         lnd-unlock:
                 build: ${PWD}/build/lnd-unlock/
@@ -58,4 +59,13 @@ services:
                 volumes:
                     - "${PWD}/lnd:/lnd"
                     - "${PWD}/secrets:/secrets"
+                network_mode: host
+        tor:
+                build: ${PWD}/build/tor
+                restart: on-failure
+                logging: *default-logging
+                volumes:
+                    - "${PWD}/tor/torrc:/etc/tor/torrc"
+                    - "${PWD}/tor/data:/var/lib/tor/"
+                    - "${PWD}/tor/run:/var/run/tor/"
                 network_mode: host
