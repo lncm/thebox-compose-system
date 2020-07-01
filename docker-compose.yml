@@ -16,8 +16,10 @@ services:
                 volumes:
                         - ${PWD}/nginx:/etc/nginx
                 restart: on-failure
-                network_mode: host
                 stop_grace_period: 30s
+                networks:
+                    - external
+                    - default
         bitcoin:
                 image: lncm/bitcoind:v0.20.0
                 logging: *default-logging
@@ -26,8 +28,9 @@ services:
                         - ${PWD}/bitcoin:/data/.bitcoin
                         - ${PWD}/bitcoin:/data/bitcoin
                 restart: on-failure
-                network_mode: host
-                stop_grace_period: 15m30s
+                stop_grace_period: 20m30s
+                networks:
+                    - default
         lnd:
                 image: lncm/lnd:v0.10.1-experimental
                 logging: *default-logging
@@ -37,13 +40,13 @@ services:
                         - ${PWD}/bitcoin:/root/.bitcoin
                 restart: on-failure
                 depends_on: [ bitcoin, web ]
-                network_mode: host
-                stop_grace_period: 5m30s
+                stop_grace_period: 10m30s
+                networks:
+                    - default
         invoicer:
                 image: "lncm/invoicer:v0.8.1"
                 depends_on: [ bitcoin, lnd ]
                 restart: on-failure
-                network_mode: host
                 stop_grace_period: 30s
                 volumes:
                         - "${PWD}/invoicer:/root/.lncm"
@@ -51,6 +54,8 @@ services:
                         - "${PWD}/invoicer:/lncm"
                         - "${PWD}/invoicer:/data"
                         - "${PWD}/lnd:/lnd"
+                networks:
+                    - default
         lnd-unlock:
                 build: ${PWD}/build/lnd-unlock/
                 depends_on: [ lnd ]
@@ -59,7 +64,8 @@ services:
                 volumes:
                     - "${PWD}/lnd:/lnd"
                     - "${PWD}/secrets:/secrets"
-                network_mode: host
+                networks:
+                    - default
         tor:
                 build: ${PWD}/build/tor
                 restart: on-failure
@@ -68,4 +74,9 @@ services:
                     - "${PWD}/tor/torrc:/etc/tor/torrc"
                     - "${PWD}/tor/data:/var/lib/tor/"
                     - "${PWD}/tor/run:/var/run/tor/"
-                network_mode: host
+                networks:
+                    - default
+
+networks:
+    outside:
+        external: true
