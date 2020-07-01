@@ -27,11 +27,45 @@ echo "Configuring invoicer rpc info"
 sed -i "s/RPCPASS/${RPCPASS}/g; " invoicer/invoicer.conf
 echo "Configuring LND rpc info"
 sed -i "s/RPCPASS/${RPCPASS}/g; " lnd/lnd.conf
-if [ ! -z $TESTNET ]; then
+if [ ! -z $TESTNET ] && [ -z $REGTEST ]; then
     echo "Enabling testnet mode if TESTNET variable is set"
-    sed -i '/[test]/s/^#//g' bitcoin/bitcoin.conf 
-    sed -i '/testnet=1/s/^#//g' bitcoin/bitcoin.conf     
+    sed -i 's/\#\[test\]/\[test\]/g;' bitcoin/bitcoin.conf 
+    sed -i 's/\#testnet=1/testnet=1/g' bitcoin/bitcoin.conf
+    sed -i 's/rpcport=8332/rpcport=18332/g; ' bitcoin/bitcoin.conf
+    sed -i 's/port=8332/port=18333/g; ' bitcoin/bitcoin.conf
+    echo "Changing LND to testnet mode"
+    sed -i 's/bitcoin.mainnet=1/bitcoin.testnet=1/g; ' lnd/lnd.conf
+    echo "Updating LND neutrino peers"
+    sed -i 's/neutrino.addpeer=bb2.breez.technology/\;neutrino.addpeer=bb2.breez.technology/g; ' lnd/lnd.conf
+    sed -i 's/neutrino.addpeer=mainnet1-btcd.zaphq.io/\;neutrino.addpeer=mainnet1-btcd.zaphq.io/g; ' lnd/lnd.conf
+    sed -i 's/neutrino.addpeer=mainnet2-btcd.zaphq.io/\;neutrino.addpeer=mainnet2-btcd.zaphq.io/g;' lnd/lnd.conf
+    sed -i 's/\;neutrino.addpeer=testnet1-btcd.zaphq.io/neutrino.addpeer=testnet1-btcd.zaphq.io/g;' lnd/lnd.conf
+    sed -i 's/\;neutrino.addpeer=testnet2-btcd.zaphq.io/neutrino.addpeer=testnet2-btcd.zaphq.io/g; ' lnd/lnd.conf
 fi
+# REGTEST set and TESTNET not
+if [ -z $TESTNET ] && [ ! -z $REGTEST ]; then
+    echo "Enabling regtest mode if REGTEST variable is set"
+    sed -i 's/\#\[regtest\]/\[regtest\]/g;' bitcoin/bitcoin.conf
+    sed -i 's/\#regtest=1/regtest=1/g' bitcoin/bitcoin.conf
+    sed -i 's/rpcport=8332/rpcport=18443/g; ' bitcoin/bitcoin.conf
+    sed -i 's/port=8333/port=18444/; ' bitcoin/bitcoin.conf
+    # update LND
+    echo "Changing LND to regtest mode"
+    sed -i 's/bitcoin.mainnet=1/bitcoin.regtest=1/g; ' lnd/lnd.conf
+    echo "Updating LND if regtest is set. Lets use bitcoind node"
+    sed -i 's/bitcoin.node=neutrino/bitcoin.node=bitcoind/g; ' lnd/lnd.conf
+fi
+
+# Generate a TOR password
+echo "Adding tor password"
+# TODO: Use docker built tor so we eliminate dependencies
+SAVE_PASSWORD=`tor --hash-password "${RPCPASS}"`
+echo "HashedControlPassword ${SAVE_PASSWORD}" >> tor/torrc
+echo "Configuring bitcoind"
+sed -i "s/torpassword=lncmrocks/torpassword=${RPCPASS}/g;" bitcoin/bitcoin.conf
+echo "Configuring LND"
+sed -i "s/tor.password=lncmrocks/tor.password=${RPCPASS}/g; " lnd/lnd.conf
+
 rm configure-box.sh
 echo "Box Configuration complete"
 
