@@ -35,6 +35,8 @@ if [ ! -z $TESTNET ] && [ -z $REGTEST ]; then
     sed -i 's/port=8332/port=18333/g; ' bitcoin/bitcoin.conf
     echo "Configure invoicer (change RPC port to 18332)"
     sed 's/port = 8332/port = 18332/g; ' invoicer/invoicer.conf
+    echo "Re-write unlock script"
+    sed -i 's/mainnet/testnet/g; ' build/lnd-unlock/unlock.sh
     echo "Changing LND to testnet mode"
     sed -i 's/bitcoin.mainnet=1/bitcoin.testnet=1/g; ' lnd/lnd.conf
     echo "Updating LND neutrino peers"
@@ -53,6 +55,8 @@ if [ -z $TESTNET ] && [ ! -z $REGTEST ]; then
     sed -i 's/port=8333/port=18444/; ' bitcoin/bitcoin.conf
     echo "Configure invoicer (Change RPC port to 18443)"
     sed -i 's/port = 8332/port = 18443/g; ' invoicer/invoicer.conf
+    echo "Re-write unlock script"
+    sed -i 's/mainnet/regtest/g; ' build/lnd-unlock/unlock.sh
     # update LND
     echo "Changing LND to regtest mode"
     sed -i 's/bitcoin.mainnet=1/bitcoin.regtest=1/g; ' lnd/lnd.conf
