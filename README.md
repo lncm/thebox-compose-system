@@ -4,6 +4,10 @@
 
 This is a basic framework for orchestration of the box services for running a full lightning and bitcoin node.
 
+## A word of caution
+
+Documentation is very sparse for now. Only use this if you know exactly what you are doing.
+
 ## How to use
 
 Ideally, you should create a user for this and then run it within the root of that user. There are some root privilege needed stuff, however LND doesn't support tor passwords yet so we will need to wait.
