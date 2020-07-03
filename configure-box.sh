@@ -29,12 +29,13 @@ echo "Configuring LND rpc info"
 sed -i "s/RPCPASS/${RPCPASS}/g; " lnd/lnd.conf
 if [ ! -z $TESTNET ] && [ -z $REGTEST ]; then
     echo "Enabling testnet mode if TESTNET variable is set"
-    sed -i 's/\#\[test\]/\[test\]/g;' bitcoin/bitcoin.conf 
+    sed -i 's/\#\[test\]/\[test\]/g;' bitcoin/bitcoin.conf
     sed -i 's/\#testnet=1/testnet=1/g' bitcoin/bitcoin.conf
     sed -i 's/rpcport=8332/rpcport=18332/g; ' bitcoin/bitcoin.conf
     sed -i 's/port=8332/port=18333/g; ' bitcoin/bitcoin.conf
     echo "Configure invoicer (change RPC port to 18332)"
     sed 's/port = 8332/port = 18332/g; ' invoicer/invoicer.conf
+    sed -i 's/mainnet/testnet/g; ' invoicer/invoicer.conf
     echo "Re-write unlock script"
     sed -i 's/mainnet/testnet/g; ' build/lnd-unlock/unlock.sh
     echo "Changing LND to testnet mode"
@@ -55,6 +56,7 @@ if [ -z $TESTNET ] && [ ! -z $REGTEST ]; then
     sed -i 's/port=8333/port=18444/; ' bitcoin/bitcoin.conf
     echo "Configure invoicer (Change RPC port to 18443)"
     sed -i 's/port = 8332/port = 18443/g; ' invoicer/invoicer.conf
+    sed -i 's/mainnet/regtest/g; ' invoicer/invoicer.conf
     echo "Re-write unlock script"
     sed -i 's/mainnet/regtest/g; ' build/lnd-unlock/unlock.sh
     # update LND
@@ -80,4 +82,3 @@ sed -i "s/tor.password=lncmrocks/tor.password=${TOR_PASSWORD}/g; " lnd/lnd.conf
 
 rm configure-box.sh
 echo "Box Configuration complete"
-
