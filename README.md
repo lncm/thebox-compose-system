@@ -30,7 +30,7 @@ Run this from your home directory. This clones this repo into your home director
 
 ```bash
 # Ideally you should run this in $HOME as the docker-compose presets are in home
-# This will not overwrite any other files but you should segment this in its 
+# This will not overwrite any other files but you should segment this in its
 # own account
 curl "https://raw.githubusercontent.com/lncm/thebox-compose-system/master/install-box.sh" | sh
 # OR wget (if this works better)
@@ -63,7 +63,42 @@ docker ps -a
 ```
 
 
+## In Regtest mode
+
+After fetching this (or after a branch reset)
+
+### Configure the box
+
+```bash
+export REGTEST=true
+./configure-box.sh
+```
+
+### Start docker-compose and build
+
+```bash
+docker-compose up --build
+# or (in detached mode)
+docker-compose up --build -d
+```
+
+### Generate a wallet and address
+
+```bash
+# Must create a wallet
+docker exec -it lncm_lnd_1 lncli --network=regtest create
+docker exec -it lncm_lnd_1 lncli --network=regtest newaddress p2wkh
+```
+
+### Mine some bitcoins into the address to use for channels
+
+```bash
+docker exec -it lncm_bitcoin_1 bitcoin-cli generatetoaddress 1 <address-generated>
+```
+
+Now you should be ready to open channels, and theoretically you can link multiple LND nodes (as long as they connect to the same bitcoind for reference)
+
+
 ## TODO List
 
 Please see the [following tasks](https://github.com/lncm/thebox-compose-system/issues?q=is%3Aissue+is%3Aopen+label%3ATODO) which are on this list.
-
