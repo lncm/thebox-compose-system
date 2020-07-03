@@ -17,6 +17,8 @@ services:
                 volumes:
                         - ${PWD}/nginx:/etc/nginx
                 restart: on-failure
+                ports:
+                    - "80:80"
                 stop_grace_period: 30s
                 networks:
                     net:
@@ -29,6 +31,9 @@ services:
                         - ${PWD}/bitcoin:/data/.bitcoin
                         - ${PWD}/bitcoin:/data/bitcoin
                 restart: on-failure
+                ports:
+                    - "8333:8333"
+                    - "8332:8332"
                 stop_grace_period: 20m30s
                 networks:
                     net:
@@ -41,6 +46,9 @@ services:
                         - ${PWD}/lnd:/root/.lnd
                         - ${PWD}/bitcoin:/root/.bitcoin
                 restart: on-failure
+                ports:
+                    - "9735:9735"
+                    - "10009:10009"
                 depends_on: [ bitcoin, web ]
                 stop_grace_period: 10m30s
                 networks:
