@@ -19,8 +19,7 @@ services:
                 restart: on-failure
                 stop_grace_period: 30s
                 networks:
-                    - outside
-                    - default
+                    - ipam
         bitcoin:
                 image: lncm/bitcoind:v0.20.0
                 logging: *default-logging
@@ -31,7 +30,7 @@ services:
                 restart: on-failure
                 stop_grace_period: 20m30s
                 networks:
-                    - default
+                    - ipam
         lnd:
                 image: lncm/lnd:v0.10.1-experimental
                 logging: *default-logging
@@ -43,7 +42,7 @@ services:
                 depends_on: [ bitcoin, web ]
                 stop_grace_period: 10m30s
                 networks:
-                    - default
+                    - ipam
         invoicer:
                 image: "lncm/invoicer:v0.8.1"
                 depends_on: [ bitcoin, lnd ]
@@ -56,7 +55,7 @@ services:
                         - "${PWD}/invoicer:/data"
                         - "${PWD}/lnd:/lnd"
                 networks:
-                    - default
+                    - ipam
         lnd-unlock:
                 build: ${PWD}/build/lnd-unlock/
                 depends_on: [ lnd ]
@@ -66,7 +65,7 @@ services:
                     - "${PWD}/lnd:/lnd"
                     - "${PWD}/secrets:/secrets"
                 networks:
-                    - default
+                    - ipam
         tor:
                 build: ${PWD}/build/tor
                 restart: on-failure
@@ -76,9 +75,12 @@ services:
                     - "${PWD}/tor/data:/var/lib/tor/"
                     - "${PWD}/tor/run:/var/run/tor/"
                 networks:
-                    - default
+                    - ipam
 
 networks:
-    outside:
-        name: Public Visible Network
-        external: true
+    net:
+        ipam:
+            driver: default
+            name: "Default network"
+            config:
+                - subnet: 10.254.0.0/16
