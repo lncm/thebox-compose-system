@@ -1,6 +1,6 @@
 #!/bin/sh
 
-HOST=lnd:8080
+HOST=10.254.2.3:8080
 TLS_CERT=/lnd/tls.cert
 LNDPASSWORD_PATH=/secrets/lnd-password.txt
 MACAROON_PATH=/lnd/data/chain/bitcoin/mainnet/admin.macaroon
