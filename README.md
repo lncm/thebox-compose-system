@@ -40,7 +40,8 @@ wget -qO- "https://raw.githubusercontent.com/lncm/thebox-compose-system/master/i
 ### Configuring
 
 ```bash
-# If you want to use testnet, otherwise we will use mainnet by default and be #reckless
+# If you want to use testnet or regtest (just use REGTEST=true), otherwise we will use mainnet by default and be #reckless
+# Some instructions on working with regtest is below
 export TESTNET=true
 # testnet mode not supported as config is completely different
 
