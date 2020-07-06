@@ -2,7 +2,11 @@ FROM alpine:3.10
 
 RUN apk add --no-cache curl jq
 
-COPY switch.sh /bin/switch-service
-RUN chmod +x /bin/switch-service
+RUN mkdir /lnd/
+RUN mkdir /secrets/
+RUN mkdir /statuses/
 
-ENTRYPOINT ["switch-service"]
+COPY switch.sh /bin/switch
+RUN chmod +x /bin/switch
+
+ENTRYPOINT ["switch"]
