@@ -69,7 +69,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.4
         lnd-unlock:
-                build: ${PWD}/build/lnd-unlock/
+                build: ${PWD}/build/lnd-unlock
                 depends_on: [ lnd ]
                 logging: *default-logging
                 restart: always
@@ -80,7 +80,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.5
         neutrino-switcher:
-                build: ${PWD}/build/neutrino-switcher/
+                build: ${PWD}/build/neutrino-switcher
                 depends_on: [ lnd, bitcoin ]
                 logging: *default-logging
                 restart: always
