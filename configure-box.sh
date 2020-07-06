@@ -36,7 +36,7 @@ if [ ! -z $TESTNET ] && [ -z $REGTEST ]; then
     echo "Configure switcher service to port 18332"
     sed -i 's/8332/18332/g; ' build/neutrino-switcher/switch.sh
     echo "Configure invoicer (change RPC port to 18332)"
-    sed 's/8332/18332/g; ' invoicer/invoicer.conf
+    sed -i 's/8332/18332/g; ' invoicer/invoicer.conf
     sed -i 's/mainnet/testnet/g; ' invoicer/invoicer.conf
     echo "Re-write unlock script"
     sed -i 's/mainnet/testnet/g; ' build/lnd-unlock/unlock.sh
