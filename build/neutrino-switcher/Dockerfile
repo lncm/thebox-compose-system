@@ -1,6 +1,6 @@
 FROM alpine:3.10
 
-RUN apk add --no-cache curl jq
+RUN apk add --no-cache curl jq bash
 
 RUN mkdir /lnd/
 RUN mkdir /secrets/
