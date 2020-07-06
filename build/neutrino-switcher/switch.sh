@@ -36,6 +36,9 @@ while true; do
           sed -i 's/bitcoin.node\=neutrino/bitcoin.node\=bitcoind/g; ' /lnd/lnd.conf
       fi
     fi
+  else
+    echo "Neutrino mode has been disabled"
+    #TODO: Lets maybe try to switch back
   fi
   # Run every every 1 hour
   sleep 3600
