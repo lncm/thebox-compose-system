@@ -27,6 +27,6 @@ while true; do
       echo "Switching over from bitcoind to neutrino"
       #sed 's/bitcoin.node\=neutrino/bitcoin.node\=bitcoind/g; ' /lnd/lnd.conf
   fi
-  # Run every every 10 hours
-  sleep 36000
+  # Run every every 1 minute for testing
+  sleep 60
 done
