@@ -34,7 +34,7 @@ if [ ! -z $TESTNET ] && [ -z $REGTEST ]; then
     sed -i 's/rpcport=8332/rpcport=18332/g; ' bitcoin/bitcoin.conf
     sed -i 's/port=8332/port=18333/g; ' bitcoin/bitcoin.conf
     echo "Configure invoicer (change RPC port to 18332)"
-    sed 's/port = 8332/port = 18332/g; ' invoicer/invoicer.conf
+    sed 's/8332/18332/g; ' invoicer/invoicer.conf
     sed -i 's/mainnet/testnet/g; ' invoicer/invoicer.conf
     echo "Re-write unlock script"
     sed -i 's/mainnet/testnet/g; ' build/lnd-unlock/unlock.sh
@@ -55,7 +55,7 @@ if [ -z $TESTNET ] && [ ! -z $REGTEST ]; then
     sed -i 's/rpcport=8332/rpcport=18443/g; ' bitcoin/bitcoin.conf
     sed -i 's/port=8333/port=18444/; ' bitcoin/bitcoin.conf
     echo "Configure invoicer (Change RPC port to 18443)"
-    sed -i 's/port = 8332/port = 18443/g; ' invoicer/invoicer.conf
+    sed -i 's/8332/18443/g; ' invoicer/invoicer.conf
     sed -i 's/mainnet/regtest/g; ' invoicer/invoicer.conf
     echo "Re-write unlock script"
     sed -i 's/mainnet/regtest/g; ' build/lnd-unlock/unlock.sh
