@@ -16,7 +16,7 @@
 PASSWORD=`cat /secrets/rpcpass.txt`
 JSONRPCURL="http://10.254.2.2:18332"
 
-INFO=`curl --user lncm:$PASSWORD --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getblockchaininfo", "params": [] }' $JSONRPCURL 2>/dev/null`
+INFO=`curl --user lncm:$PASSWORD --data-binary '{"jsonrpc": "1.0", "id":"switchme", "method": "getblockchaininfo", "params": [] }' $JSONRPCURL 2>/dev/null`
 
 HEADERS=`echo $INFO | jq .result.headers`
 BLOCKS=`echo $INFO | jq .result.blocks`
