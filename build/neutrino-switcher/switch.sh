@@ -31,9 +31,9 @@ while true; do
     echo "Checking if synced...."
     if [ ! -f /statuses/node-status-bitcoind-ready ]; then
       if [ $HEADERS -eq $BLOCKS ]; then
-          echo "Bitcoind is ready to be switched"
+          echo "Bitcoind  has been ready to be switched"
           touch /statuses/node-status-bitcoind-ready
-          #sed 's/bitcoin.node\=neutrino/bitcoin.node\=bitcoind/g; ' /lnd/lnd.conf
+          #sed -i 's/bitcoin.node\=neutrino/bitcoin.node\=bitcoind/g; ' /lnd/lnd.conf
       fi
     fi
   fi
