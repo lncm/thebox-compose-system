@@ -41,7 +41,7 @@ jobs:
                             restore-keys: |
                               ${{ runner.os }}-buildx-
 
-                        - name: Run Docker buildx against the current branch
+                        - name: Run Docker buildx against the current branch (lnd-unlock)
                           run: |
                                   docker buildx build \
                                   --cache-from "type=local,src=/tmp/.buildx-cache" \
@@ -50,7 +50,7 @@ jobs:
                                   --tag ${{ secrets.DOCKER_HUB_USER }}/lnd-unlock:$BRANCH \
                                   --output "type=registry" ./build/lnd-unlock
 
-                        - name: build lnd-unlock against latest
+                        - name: build lnd-unlock against latest (lnd-unlock)
                           run: |
                                   docker buildx build \
                                   --cache-from "type=local,src=/tmp/.buildx-cache" \
@@ -58,3 +58,21 @@ jobs:
                                   --platform linux/amd64,linux/arm64,linux/arm/v7 \
                                   --tag ${{ secrets.DOCKER_HUB_USER }}/lnd-unlock:latest \
                                   --output "type=registry" ./build/lnd-unlock
+
+                        - name: Run Docker buildx against the current branch (neutrino-switcher)
+                          run: |
+                                  docker buildx build \
+                                  --cache-from "type=local,src=/tmp/.buildx-cache" \
+                                  --cache-to "type=local,dest=/tmp/.buildx-cache" \
+                                  --platform linux/amd64,linux/arm64,linux/arm/v7 \
+                                  --tag ${{ secrets.DOCKER_HUB_USER }}/neutrino-switcher:$BRANCH \
+                                  --output "type=registry" ./build/neutrino-switcher
+
+                        - name: build neutrino-switcher against latest (neutrino-switcher)
+                          run: |
+                                  docker buildx build \
+                                  --cache-from "type=local,src=/tmp/.buildx-cache" \
+                                  --cache-to "type=local,dest=/tmp/.buildx-cache" \
+                                  --platform linux/amd64,linux/arm64,linux/arm/v7 \
+                                  --tag ${{ secrets.DOCKER_HUB_USER }}/lnd-unlock:latest \
+                                  --output "type=registry" ./build/neutrino-switcher
