@@ -79,6 +79,18 @@ services:
                 networks:
                     net:
                         ipv4_address: 10.254.2.5
+        neutrino-switcher:
+                build: ${PWD}/build/neutrino-switcher/
+                depends_on: [ lnd, bitcoin ]
+                logging: *default-logging
+                restart: always
+                volumes:
+                    - "${PWD}/lnd:/lnd"
+                    - "${PWD}/secrets:/secrets"
+                    - "${PWD}/statuses:/statuses"
+                networks:
+                    net:
+                        ipv4_address: 10.254.2.6
         tor:
                 build: ${PWD}/build/tor
                 restart: on-failure
