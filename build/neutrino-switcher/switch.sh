@@ -13,23 +13,28 @@
 # Allow access to LND directory (use /lnd/lnd.conf)
 # Allow access to 'statuses'. /statuses/
 
-# Status file:  /statuses/node-status-bitcoind-ready (meaning we don't need neutrino anymore)
-
+# Output: /statuses/node-status-bitcoind-ready  (when ready, where a service can pick it up)
+# Then
 PASSWORD=`cat /secrets/rpcpass.txt`
 JSONRPCURL="http://10.254.2.2:8332"
 
 while true; do
-  INFO=`curl --user lncm:$PASSWORD --data-binary '{"jsonrpc": "1.0", "id":"switchme", "method": "getblockchaininfo", "params": [] }' $JSONRPCURL 2>/dev/null`
+  IS_NEUTRINO=`grep -c 'bitcoin.node=neutrino' /lnd/lnd.conf`
+  if [ $IS_NEUTRINO -eq 1 ]; then
+    echo "If set to neutrino then lets check"
 
-  HEADERS=`echo $INFO | jq .result.headers`
-  BLOCKS=`echo $INFO | jq .result.blocks`
+    INFO=`curl --user lncm:$PASSWORD --data-binary '{"jsonrpc": "1.0", "id":"switchme", "method": "getblockchaininfo", "params": [] }' $JSONRPCURL 2>/dev/null`
 
-  echo "Checking if synced...."
-  if [ ! -f /statuses/node-status-bitcoind-ready ]; then
-    if [ $HEADERS -eq $BLOCKS ]; then
-        echo "Bitcoind is ready to be switched"
-        touch /statuses/node-status-bitcoind-ready
-        #sed 's/bitcoin.node\=neutrino/bitcoin.node\=bitcoind/g; ' /lnd/lnd.conf
+    HEADERS=`echo $INFO | jq .result.headers`
+    BLOCKS=`echo $INFO | jq .result.blocks`
+
+    echo "Checking if synced...."
+    if [ ! -f /statuses/node-status-bitcoind-ready ]; then
+      if [ $HEADERS -eq $BLOCKS ]; then
+          echo "Bitcoind is ready to be switched"
+          touch /statuses/node-status-bitcoind-ready
+          #sed 's/bitcoin.node\=neutrino/bitcoin.node\=bitcoind/g; ' /lnd/lnd.conf
+      fi
     fi
   fi
   # Run every every 1 minute for testing
