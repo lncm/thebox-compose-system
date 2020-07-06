@@ -21,7 +21,12 @@ INFO=`curl --user lncm:$PASSWORD --data-binary '{"jsonrpc": "1.0", "id":"switchm
 HEADERS=`echo $INFO | jq .result.headers`
 BLOCKS=`echo $INFO | jq .result.blocks`
 
-if [ $HEADERS -eq $BLOCKS ]; then
-    echo "Switching over from bitcoind to neutrino"
-    sed 's/bitcoin.node\=neutrino/bitcoin.node\=bitcoind/g; ' /lnd/lnd.conf
-fi
+while true; do
+  echo "Checking if synced...."
+  if [ $HEADERS -eq $BLOCKS ]; then
+      echo "Switching over from bitcoind to neutrino"
+      #sed 's/bitcoin.node\=neutrino/bitcoin.node\=bitcoind/g; ' /lnd/lnd.conf
+  fi
+  # Run every every 10 hours
+  sleep 36000
+done
