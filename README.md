@@ -33,12 +33,17 @@ Ensure that your account is permissioned for docker.
 Run this from your home directory. This clones this repo into your home directory, as well as preserving the existing structure.
 
 ```bash
-# Ideally you should run this in $HOME as the docker-compose presets are in home
+# This can run in anywhere. Ideally HOME, but you can use multiple folders with different installs if you wish to keep things separate
 # This will not overwrite any other files but you should segment this in its
-# own account
+# own folder
 curl "https://raw.githubusercontent.com/lncm/thebox-compose-system/master/install-box.sh" | sh
 # OR wget (if this works better)
 wget -qO- "https://raw.githubusercontent.com/lncm/thebox-compose-system/master/install-box.sh" | sh
+
+# Alternatively
+curl "https://gitlab.com/lncm/thebox-compose-system/-/raw/master/install-box.sh" | sh
+# or (wget)
+wget -qO- "https://gitlab.com/lncm/thebox-compose-system/-/raw/master/install-box.sh" | sh
 ```
 
 ### Configuring
