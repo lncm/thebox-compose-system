@@ -47,7 +47,7 @@ curl "https://gitlab.com/lncm/thebox-compose-system/-/raw/master/install-box.sh"
 wget -qO- "https://gitlab.com/lncm/thebox-compose-system/-/raw/master/install-box.sh" | sh
 ```
 
-### Configuring
+## 📝 Configuring
 
 ```bash
 # If you want to use testnet or regtest (just use REGTEST=true), otherwise we will use mainnet by default and be #reckless
@@ -61,7 +61,7 @@ wget -qO- "https://raw.githubusercontent.com/lncm/thebox-compose-system/master/c
 ./configure-box.sh
 ```
 
-### Running
+## 📝 Running
 
 ```bash
 # Build containers in build/ always
@@ -74,7 +74,7 @@ docker ps -a
 ```
 
 
-## In Regtest mode
+## 📝 Configuring and Running in Regtest mode
 
 After fetching this (or after a branch reset)
 
@@ -110,6 +110,6 @@ docker exec -it lncm_bitcoin_1 bitcoin-cli generatetoaddress 1 <address-generate
 Now you should be ready to open channels, and theoretically you can link multiple LND nodes (as long as they connect to the same bitcoind for reference)
 
 
-## TODO List
+## ✅ TODO List
 
 Please see the [following tasks](https://github.com/lncm/thebox-compose-system/issues?q=is%3Aissue+is%3Aopen+label%3ATODO) which are on this list.
