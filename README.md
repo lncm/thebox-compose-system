@@ -59,6 +59,11 @@ export TESTNET=true
 wget -qO- "https://raw.githubusercontent.com/lncm/thebox-compose-system/master/configure-box.sh" | sh
 # or (should be in the $HOME directory after install)
 ./configure-box.sh
+
+# Alternatively
+curl "https://gitlab.com/lncm/thebox-compose-system/-/raw/master/configure-box.sh" | sh
+# or (wget)
+wget -qO- "https://gitlab.com/lncm/thebox-compose-system/-/raw/master/configure-box.sh" | sh
 ```
 
 ## 📝 Running
