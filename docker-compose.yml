@@ -76,6 +76,10 @@ services:
                 volumes:
                     - "${PWD}/lnd:/lnd"
                     - "${PWD}/secrets:/secrets"
+                environment:
+                    NETWORK: mainnet
+                    LNDHOSTNAME: lnd
+                    HOSTIPPORT: 10.254.2.3:8080
                 networks:
                     net:
                         ipv4_address: 10.254.2.5
@@ -88,6 +92,8 @@ services:
                     - "${PWD}/lnd:/lnd"
                     - "${PWD}/secrets:/secrets"
                     - "${PWD}/statuses:/statuses"
+                environment:
+                    JSONRPCURL: http://10.254.2.2:8332
                 networks:
                     net:
                         ipv4_address: 10.254.2.6
