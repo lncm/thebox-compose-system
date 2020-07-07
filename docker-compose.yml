@@ -69,7 +69,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.4
         lnd-unlock:
-                build: ${PWD}/build/lnd-unlock
+                image: "lncm/lnd-unlock:latest"
                 depends_on: [ lnd ]
                 logging: *default-logging
                 restart: always
@@ -80,7 +80,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.5
         neutrino-switcher:
-                build: ${PWD}/build/neutrino-switcher
+                image: "lncm/neutrino-switcher:latest"
                 depends_on: [ lnd, bitcoin ]
                 logging: *default-logging
                 restart: always
@@ -92,7 +92,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.6
         tor:
-                build: ${PWD}/build/tor
+                image: "lncm/tor:latest"
                 restart: on-failure
                 logging: *default-logging
                 volumes:
