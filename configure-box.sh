@@ -77,7 +77,7 @@ echo "Adding tor password"
 echo "Generating TOR PASSWORD"
 TOR_PASSWORD=`dd if=/dev/urandom bs=32 count=1 2>/dev/null | sha256sum -b | sed 's/ .*//'`
 echo "Fetching latest TOR container"
-docker pull lncm/tor:latest
+docker pull lncm/tor:1.0.0
 echo "Generating password"
 SAVE_PASSWORD=`docker run --rm -it lncm/tor --quiet --hash-password "${TOR_PASSWORD}"`
 echo "HashedControlPassword ${SAVE_PASSWORD}" >> tor/torrc
