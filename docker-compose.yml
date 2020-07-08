@@ -98,8 +98,10 @@ services:
                     - "${PWD}/lnd:/lnd"
                     - "${PWD}/secrets:/secrets"
                     - "${PWD}/statuses:/statuses"
+                    - "/var/run/docker.sock:/var/run/docker.sock"
                 environment:
                     JSONRPCURL: http://10.254.2.2:8332
+                    LND_CONTAINER_NAME: lnd
                 networks:
                     net:
                         ipv4_address: 10.254.2.6
