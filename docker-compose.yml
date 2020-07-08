@@ -89,7 +89,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.5
         neutrino-switcher:
-                image: "lncm/neutrino-switcher:1.0.0"
+                image: "lncm/neutrino-switcher:1.0.1"
                 container_name: neutrino-switcher
                 depends_on: [ lnd, bitcoin ]
                 logging: *default-logging
@@ -102,6 +102,7 @@ services:
                 environment:
                     JSONRPCURL: http://10.254.2.2:8332
                     LND_CONTAINER_NAME: lnd
+                    SLEEPTIME: 3600
                 networks:
                     net:
                         ipv4_address: 10.254.2.6
