@@ -13,6 +13,7 @@ x-utility: &default-utility
 services:
         web:
                 image: nginx:1.17.8
+                container_name: web
                 logging: *default-logging
                 volumes:
                         - ${PWD}/nginx:/etc/nginx
@@ -25,6 +26,7 @@ services:
                         ipv4_address: 10.254.1.2
         bitcoin:
                 image: lncm/bitcoind:v0.20.0
+                container_name: bitcoin
                 logging: *default-logging
                 volumes:
                         - ${PWD}/bitcoin:/root/.bitcoin
@@ -40,6 +42,7 @@ services:
                         ipv4_address: 10.254.2.2
         lnd:
                 image: lncm/lnd:v0.10.1-experimental
+                container_name: lnd
                 logging: *default-logging
                 volumes:
                         - ${PWD}/lnd:/data/.lnd
@@ -56,6 +59,7 @@ services:
                         ipv4_address: 10.254.2.3
         invoicer:
                 image: "lncm/invoicer:v0.8.1"
+                container_name: invoicer
                 depends_on: [ bitcoin, lnd ]
                 restart: on-failure
                 stop_grace_period: 30s
@@ -70,6 +74,7 @@ services:
                         ipv4_address: 10.254.2.4
         lnd-unlock:
                 image: "lncm/lnd-unlock:1.0.0"
+                container_name: lnd-unlock
                 depends_on: [ lnd ]
                 logging: *default-logging
                 restart: always
@@ -85,6 +90,7 @@ services:
                         ipv4_address: 10.254.2.5
         neutrino-switcher:
                 image: "lncm/neutrino-switcher:1.0.0"
+                container_name: neutrino-switcher
                 depends_on: [ lnd, bitcoin ]
                 logging: *default-logging
                 restart: always
@@ -99,6 +105,7 @@ services:
                         ipv4_address: 10.254.2.6
         tor:
                 image: "lncm/tor:1.0.0"
+                container_name: tor
                 restart: on-failure
                 logging: *default-logging
                 volumes:
