@@ -14,7 +14,7 @@
 check_dependencies () {
   for cmd in "$@"; do
     if ! command -v $cmd >/dev/null 2>&1; then
-      log "This script requires \"${cmd}\" to be installed"
+      echo "This script requires \"${cmd}\" to be installed"
       exit 1
     fi
   done
