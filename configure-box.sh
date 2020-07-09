@@ -11,6 +11,17 @@
 # Install the docker-compose box to the current working directory
 # Pre-requisites: wget
 
+check_dependencies () {
+  for cmd in "$@"; do
+    if ! command -v $cmd >/dev/null 2>&1; then
+      echo "This script requires \"${cmd}\" to be installed"
+      exit 1
+    fi
+  done
+}
+
+check_dependencies wget docker
+
 echo "Start box configuration"
 echo "Installing RPCAuth.py and configuring secrets"
 cd bin/
