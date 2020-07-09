@@ -22,6 +22,11 @@ check_dependencies () {
 
 check_dependencies wget docker
 
+if [ ! $(uname -s) == "Linux" ]; then
+  echo "Sorry, only linux systems are supported at this time (you may work around this but you are on your own there)"
+  exit 1
+fi
+
 echo "Start box configuration"
 echo "Installing RPCAuth.py and configuring secrets"
 cd bin/
