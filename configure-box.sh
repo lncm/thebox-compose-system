@@ -9,7 +9,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 # Install the docker-compose box to the current working directory
-# Pre-requisites: wget
+# Pre-requisites: wget docker
 
 check_dependencies () {
   for cmd in "$@"; do
