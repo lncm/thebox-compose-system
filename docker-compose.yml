@@ -107,7 +107,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.6
         tor:
-                image: "lncm/tor:1.0.0"
+                image: "lncm/tor:0.4.4.5"
                 container_name: tor
                 restart: on-failure
                 logging: *default-logging
