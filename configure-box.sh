@@ -26,6 +26,7 @@ if [ ! $(uname -s) == "Linux" ]; then
   echo "Sorry, only linux systems are supported at this time (you may work around this but you are on your own there)"
   exit 1
 fi
+TORVERSION=0.4.4.5
 
 echo "Start box configuration"
 echo "Installing RPCAuth.py and configuring secrets"
@@ -95,7 +96,7 @@ TOR_PASSWORD=`dd if=/dev/urandom bs=32 count=1 2>/dev/null | sha256sum -b | sed 
 echo "Fetching latest TOR container"
 docker pull lncm/tor:1.0.0
 echo "Generating password"
-SAVE_PASSWORD=`docker run --rm -it lncm/tor --quiet --hash-password "${TOR_PASSWORD}"`
+SAVE_PASSWORD=`docker run --rm -it lncm/tor:$TORVERSION --quiet --hash-password "${TOR_PASSWORD}"`
 echo "HashedControlPassword ${SAVE_PASSWORD}" >> tor/torrc
 echo "Configuring bitcoind"
 sed -i "s/torpassword=lncmrocks/torpassword=${TOR_PASSWORD}/g;" bitcoin/bitcoin.conf
