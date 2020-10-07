@@ -41,7 +41,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.2
         lnd:
-                image: lncm/lnd:v0.11.0-experimental
+                image: lncm/lnd:v0.11.1-experimental
                 container_name: lnd
                 logging: *default-logging
                 volumes:
