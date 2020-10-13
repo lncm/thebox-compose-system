@@ -102,18 +102,31 @@ docker-compose up --build -d
 
 ```bash
 # Must create a wallet
-docker exec -it lncm_lnd_1 lncli --network=regtest create
-docker exec -it lncm_lnd_1 lncli --network=regtest newaddress p2wkh
+docker exec -it lnd lncli --network=regtest create
+docker exec -it lnd lncli --network=regtest newaddress p2wkh
 ```
 
-### Mine some bitcoins into the address to use for channels
+### Mine some bitcoins into the address to use for channels (regtest only)
 
 ```bash
-docker exec -it lncm_bitcoin_1 bitcoin-cli generatetoaddress 1 <address-generated>
+docker exec -it bitcoin bitcoin-cli generatetoaddress 1 <address-generated>
 ```
 
 Now you should be ready to open channels, and theoretically you can link multiple LND nodes (as long as they connect to the same bitcoind for reference)
 
+## Adding licensing information to files
+
+We're unlicense because sharing is caring. But lawyers and stuff are not cool.
+
+```
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+```
 
 ## ✅ TODO List
 
