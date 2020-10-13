@@ -1,20 +1,8 @@
 version: '3.8'
-x-logging: &default-logging
-    driver: journald
-    options:
-        tag: "{{.Name}}"
-
-x-utility: &default-utility
-    image: "alpine:3.11"
-    logging: *default-logging
-    networks:
-        - default
-
 services:
         web:
                 image: nginx:1.17.8
                 container_name: web
-                logging: *default-logging
                 volumes:
                         - ${PWD}/nginx:/etc/nginx
                 restart: on-failure
@@ -27,7 +15,6 @@ services:
         bitcoin:
                 image: lncm/bitcoind:v0.20.1
                 container_name: bitcoin
-                logging: *default-logging
                 volumes:
                         - ${PWD}/bitcoin:/root/.bitcoin
                         - ${PWD}/bitcoin:/data/.bitcoin
@@ -43,7 +30,6 @@ services:
         lnd:
                 image: lncm/lnd:v0.11.1-experimental
                 container_name: lnd
-                logging: *default-logging
                 volumes:
                         - ${PWD}/lnd:/data/.lnd
                         - ${PWD}/lnd:/root/.lnd
@@ -76,7 +62,6 @@ services:
                 image: "lncm/lnd-unlock:1.0.0"
                 container_name: lnd-unlock
                 depends_on: [ lnd ]
-                logging: *default-logging
                 restart: always
                 volumes:
                     - "${PWD}/lnd:/lnd"
@@ -92,7 +77,6 @@ services:
                 image: "lncm/neutrino-switcher:1.0.3"
                 container_name: neutrino-switcher
                 depends_on: [ lnd, bitcoin ]
-                logging: *default-logging
                 restart: always
                 volumes:
                     - "${PWD}/lnd:/lnd"
@@ -110,7 +94,6 @@ services:
                 image: "lncm/tor:0.4.4.5"
                 container_name: tor
                 restart: on-failure
-                logging: *default-logging
                 volumes:
                     - "${PWD}/tor/torrc:/etc/tor/torrc"
                     - "${PWD}/tor/data:/var/lib/tor/"
