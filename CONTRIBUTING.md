@@ -8,7 +8,11 @@
 
 #### **Did you write a patch that fixes a bug?**
 
-* Open a new GitHub pull request with the patch.
+* Clone this repo
+
+* Create a branch in your cloned repo either on the web or from CLI ```git checkout -b your_branch_name```
+
+* Push the branch and then open a Pull request
 
 * Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
 
@@ -18,7 +22,7 @@
 
 We could definetely use some UX, QA or Build Systems support on this project. See getting in touch below or just [create an issue](https://github.com/lncm/thebox-compose-system/issues/new) and tag it with question.
 
-Or if you just want to donate some money please use [**bc1qsdlppqy9mhah5ljmhcmtpl20n9km8jz45n3qx3les3q2qfzpwm7qnruqnq**](https://blockchair.com/bitcoin/address/bc1qsdlppqy9mhah5ljmhcmtpl20n9km8jz45n3qx3les3q2qfzpwm7qnruqnq) or feel free to use [**Lightning via tippin.me**](https://tippin.me/@lncnx) .
+Or send some donations via [**Lightning via tippin.me**](https://tippin.me/@lncnx)
 
 #### **Getting in touch**
 
