@@ -59,7 +59,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.4
         lnd-unlock:
-                image: "lncm/lnd-unlock:1.0.0"
+                image: "lncm/lnd-unlock:1.0.2"
                 container_name: lnd-unlock
                 depends_on: [ lnd ]
                 restart: always
