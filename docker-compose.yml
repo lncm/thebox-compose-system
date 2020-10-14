@@ -50,9 +50,6 @@ services:
                 restart: on-failure
                 stop_grace_period: 30s
                 volumes:
-                        - "${PWD}/invoicer:/root/.lncm"
-                        - "${PWD}/invoicer:/data/.lncm"
-                        - "${PWD}/invoicer:/lncm"
                         - "${PWD}/invoicer:/data"
                         - "${PWD}/lnd:/lnd"
                 networks:
