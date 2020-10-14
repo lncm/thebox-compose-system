@@ -56,7 +56,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.4
         lnd-unlock:
-                image: "lncm/lnd-unlock:1.0.0"
+                image: "lncm/lnd-unlock:1.0.2"
                 container_name: lnd-unlock
                 depends_on: [ lnd ]
                 restart: always
@@ -71,7 +71,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.5
         neutrino-switcher:
-                image: "lncm/neutrino-switcher:1.0.3"
+                image: "lncm/neutrino-switcher:1.0.4"
                 container_name: neutrino-switcher
                 depends_on: [ lnd, bitcoin ]
                 restart: always
