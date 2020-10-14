@@ -74,7 +74,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.5
         neutrino-switcher:
-                image: "lncm/neutrino-switcher:1.0.3"
+                image: "lncm/neutrino-switcher:1.0.4"
                 container_name: neutrino-switcher
                 depends_on: [ lnd, bitcoin ]
                 restart: always
