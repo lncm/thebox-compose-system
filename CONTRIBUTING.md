@@ -18,6 +18,33 @@
 
 * If you haven't done a test build yet, please mention this in the pull request. This will save a world of pain for future builds. There is no regression testing suite set up yet but this is something that we're looking into. Contributions are welcome.
 
+##### GPG Signing
+
+Please GPG sign all your commits and also consider gpg signing any text files.
+
+A `.gitconfig` should look similar to this
+
+```
+[user]
+        signingkey = YOURKEY
+        name = YOURGITDISPLAYNAME
+        email = YOUR@GIT.DISPLAY.EMAIL
+[commit]
+        gpgsign = true
+
+```
+
+###### Signing Text Files
+
+```bash
+# where FILENAME is the filename
+gpg --armor --clearsign FILENAME
+mv FILENAME.asc FILENAME
+
+# To verify, simply to
+gpg --verify FILENAME
+```
+
 #### **I'm not a developer, what can I do to help?**
 
 We could definetely use some UX, QA or Build Systems support on this project. See getting in touch below or just [create an issue](https://github.com/lncm/thebox-compose-system/issues/new) and tag it with question.
