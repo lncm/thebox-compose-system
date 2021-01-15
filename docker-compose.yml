@@ -13,7 +13,7 @@ services:
                     net:
                         ipv4_address: 10.254.1.2
         bitcoin:
-                image: lncm/bitcoind:v0.20.1
+                image: lncm/bitcoind:v0.21.0@sha256:32b3eb6d3599e7ae89c040d8c3fba4aac4f85ccca3bd0698bb45a790f9dbf2f1
                 container_name: bitcoin
                 volumes:
                         - ${PWD}/bitcoin:/root/.bitcoin
