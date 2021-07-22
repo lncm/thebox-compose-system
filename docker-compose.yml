@@ -28,12 +28,14 @@ services:
                     net:
                         ipv4_address: 10.254.2.2
         lnd:
-                image: lncm/lnd:v0.12.1-experimental
+                image: lncm/lnd:v0.13.1-experimental
                 container_name: lnd
                 volumes:
                         - ${PWD}/lnd:/data/.lnd
                         - ${PWD}/lnd:/root/.lnd
                         - ${PWD}/bitcoin:/root/.bitcoin
+                        - ${PWD}/secrets/lnd-passwors.txt:/data/.lnd/walletpassword
+                        - ${PWD}/secrets/lnd-passwors.txt:/root/.lnd/walletpassword
                 restart: on-failure
                 ports:
                     - "9735:9735"
@@ -55,21 +57,6 @@ services:
                 networks:
                     net:
                         ipv4_address: 10.254.2.4
-        lnd-unlock:
-                image: "lncm/lnd-unlock:1.0.2"
-                container_name: lnd-unlock
-                depends_on: [ lnd ]
-                restart: always
-                volumes:
-                    - "${PWD}/lnd:/lnd"
-                    - "${PWD}/secrets:/secrets"
-                environment:
-                    NETWORK: mainnet
-                    LNDHOSTNAME: lnd
-                    HOSTIPPORT: 10.254.2.3:8080
-                networks:
-                    net:
-                        ipv4_address: 10.254.2.5
         neutrino-switcher:
                 image: "lncm/neutrino-switcher:1.0.4"
                 container_name: neutrino-switcher
@@ -88,7 +75,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.6
         tor:
-                image: "lncm/tor:0.4.4.5"
+                image: "lncm/tor:0.4.4.7"
                 container_name: tor
                 restart: on-failure
                 volumes:
