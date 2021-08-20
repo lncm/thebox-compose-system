@@ -34,8 +34,8 @@ services:
                         - ${PWD}/lnd:/data/.lnd
                         - ${PWD}/lnd:/root/.lnd
                         - ${PWD}/bitcoin:/root/.bitcoin
-                        - ${PWD}/secrets/lnd-passwors.txt:/data/.lnd/walletpassword
-                        - ${PWD}/secrets/lnd-passwors.txt:/root/.lnd/walletpassword
+                        - ${PWD}/secrets/lnd-password.txt:/data/.lnd/walletpassword
+                        - ${PWD}/secrets/lnd-password.txt:/root/.lnd/walletpassword
                 restart: on-failure
                 ports:
                     - "9735:9735"
