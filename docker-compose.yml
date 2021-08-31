@@ -28,20 +28,21 @@ services:
                     net:
                         ipv4_address: 10.254.2.2
         lnd:
-                image: lncm/lnd:v0.13.1-experimental
+                image: lightninglabs/lnd:v0.13.1-beta@sha256:f26ddbbea3f7bad45d994e6258b8198acaebf65e575eedf2a566d04f0c1fb9d9
+                user: 1000:1000
+                environment:
+                        HOME: /data
                 container_name: lnd
                 volumes:
                         - ${PWD}/lnd:/data/.lnd
-                        - ${PWD}/lnd:/root/.lnd
-                        - ${PWD}/bitcoin:/root/.bitcoin
+                        - ${PWD}/bitcoin:/data/.bitcoin                        
                         - ${PWD}/secrets/lnd-password.txt:/data/.lnd/walletpassword
-                        - ${PWD}/secrets/lnd-password.txt:/root/.lnd/walletpassword
                 restart: on-failure
                 ports:
                     - "9735:9735"
                     - "10009:10009"
                 depends_on: [ bitcoin, web ]
-                stop_grace_period: 10m30s
+                stop_grace_period: 5m30s
                 networks:
                     net:
                         ipv4_address: 10.254.2.3
@@ -75,7 +76,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.6
         tor:
-                image: "lncm/tor:0.4.4.7"
+                image: "lncm/tor:0.4.6.7@sha256:472c8d1265679e7cfd641edcbc44ec2fa0e500f6929bd8dc1f4811feffcfefaa"
                 container_name: tor
                 restart: on-failure
                 volumes:
