@@ -35,9 +35,7 @@ services:
                 container_name: lnd
                 volumes:
                         - ${PWD}/lnd:/data/.lnd
-                        - ${PWD}/lnd:/root/.lnd
                         - ${PWD}/bitcoin:/data/.bitcoin                        
-                        - ${PWD}/bitcoin:/root/.bitcoin
                         - ${PWD}/secrets/lnd-password.txt:/data/.lnd/walletpassword
                 restart: on-failure
                 ports:
