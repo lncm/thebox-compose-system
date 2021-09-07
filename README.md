@@ -128,6 +128,25 @@ We're unlicense because sharing is caring. But lawyers and stuff are not cool.
 # OTHER DEALINGS IN THE SOFTWARE.
 ```
 
+## Architecture
+
+```
+
+                                    + ------------- +                   + ------------- +
+                                    |    bitcoind   | < - - - - - - - - |      lnd      |
+                                    + ------------- +                   + ------------- +
+                                            ^                                   +
+                                            |                                   |
+                                            |                                   |
+                                            |                                   +
+                                            |                + --------------------------------------------- +
+                                            |                |                                               |
+                                            |                |                                               |
+                                            |         + ----------------------- +                    + ----------------------- +
+                                            + ------- |    neutrino-switcher    |                    |         invoicer        |
+                                                      + ----------------------- +                    + ----------------------- +
+```
+
 ## ✅ TODO List
 
 Please see the [following tasks](https://github.com/lncm/thebox-compose-system/issues?q=is%3Aissue+is%3Aopen+label%3ATODO) which are on this list.
