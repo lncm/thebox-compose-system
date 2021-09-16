@@ -13,10 +13,12 @@ services:
                     net:
                         ipv4_address: 10.254.1.2
         bitcoin:
-                image: lncm/bitcoind:v0.21.0
+                image: lncm/bitcoind:v22.0@sha256:37a1adb29b3abc9f972f0d981f45e41e5fca2e22816a023faa9fdc0084aa4507
                 container_name: bitcoin
+                user: 1000:1000
+                environment:
+                        HOME: /data
                 volumes:
-                        - ${PWD}/bitcoin:/root/.bitcoin
                         - ${PWD}/bitcoin:/data/.bitcoin
                         - ${PWD}/bitcoin:/data/bitcoin
                 restart: on-failure
@@ -48,18 +50,25 @@ services:
                         ipv4_address: 10.254.2.3
         invoicer:
                 image: "lncm/invoicer:v0.8.1"
+                user: 1000:1000
+                environment:
+                        HOME: /data
                 container_name: invoicer
                 depends_on: [ bitcoin, lnd ]
                 restart: on-failure
                 stop_grace_period: 30s
                 volumes:
                         - "${PWD}/invoicer:/data"
+                        - "${PWD}/invoicer:/data/.lncm"
                         - "${PWD}/lnd:/lnd"
                 networks:
                     net:
                         ipv4_address: 10.254.2.4
         neutrino-switcher:
                 image: "lncm/neutrino-switcher:1.0.4"
+                user: 1000:1000
+                environment:
+                        HOME: /data
                 container_name: neutrino-switcher
                 depends_on: [ lnd, bitcoin ]
                 restart: always
@@ -78,6 +87,9 @@ services:
         tor:
                 image: "lncm/tor:0.4.6.7@sha256:472c8d1265679e7cfd641edcbc44ec2fa0e500f6929bd8dc1f4811feffcfefaa"
                 container_name: tor
+                user: 1000:1000
+                environment:
+                        HOME: /data
                 restart: on-failure
                 volumes:
                     - "${PWD}/tor/torrc:/etc/tor/torrc"
