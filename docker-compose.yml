@@ -30,7 +30,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.2
         lnd:
-                image: lightninglabs/lnd:v0.13.1-beta@sha256:f26ddbbea3f7bad45d994e6258b8198acaebf65e575eedf2a566d04f0c1fb9d9
+                image: lightninglabs/lnd:v0.14.0-beta@sha256:4bf574d546822e17ddda46f80502034e58231a8c8696ada0aacaf9c7368f9ab5
                 user: 1000:1000
                 environment:
                         HOME: /data
