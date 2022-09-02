@@ -30,7 +30,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.2
         lnd:
-                image: lightninglabs/lnd:v0.15.0-beta@sha256:d227a9db0727ff56020c8d6604c8c369757123d238ab6ce679579c2dd0d0d259
+                image: "lightninglabs/lnd:v0.15.1-beta@sha256:b2a5f62806d1a295c4e600e0b99159cbfae1d5caf338db01bccfbc8393838275"
                 user: 1000:1000
                 environment:
                         HOME: /data
@@ -85,7 +85,7 @@ services:
                     net:
                         ipv4_address: 10.254.2.6
         tor:
-                image: "lncm/tor:0.4.7.7@sha256:3c4ae833d2fefbea7d960f833a1e89fc9b2069a6e5f360109b5ddc9334ac0227"
+                image: "lncm/tor:0.4.7.9@sha256:86c2fe9d9099e6376798979110b8b9a3ee5d8adec27289ac4a5ee892514ffe92"
                 container_name: tor
                 user: 1000:1000
                 environment:
