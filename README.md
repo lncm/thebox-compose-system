@@ -150,3 +150,8 @@ We're unlicense because sharing is caring. But lawyers and stuff are not cool.
 ## ✅ TODO List
 
 Please see the [following tasks](https://github.com/lncm/thebox-compose-system/issues?q=is%3Aissue+is%3Aopen+label%3ATODO) which are on this list.
+
+
+### Infrastructure model
+
+![Infrastructure model](.infragenie/infrastructure_model.png)
